@@ -1,0 +1,91 @@
+[tool.poetry]
+name = "python-backend-template"
+version = "0.0.0"
+description = ""
+authors = ["Frank Dai <yongjindai09@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.103.2"
+pydantic = "^2.4.2"
+pydantic-settings = "^2.0.3"
+python-dotenv = "^1.0.0"
+structlog = "^23.1.0"
+tenacity = "^8.2.3"
+sqlalchemy = "^2.0.21"
+asyncpg = "^0.28.0"
+uvicorn = "^0.23.2"
+alembic = "^1.12.0"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.5.1"
+pre-commit = "^3.4.0"
+ruff = "^0.0.292"
+black = "^23.9.1"
+pytest = "^7.4.2"
+commitizen = "^3.10.0"
+coverage = "^7.3.2"
+pytest-asyncio = "^0.21.1"
+pytest-bdd = "^6.1.1"
+pytest-cov = "^4.1.0"
+pytest-mock = "^3.11.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+priority = "default"
+
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+priority = "primary"
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "supplemental"
+
+[tool.black]
+line-length = 120
+
+[tool.ruff]
+line-length = 120
+select = [
+  "E", # pycodestyle errors
+  "F", # pyflakes
+  "W", # pycodestyle warnings
+  "I", # isort
+  "C", # flake8-comprehensions
+  "B", # flake8-bugbear
+  "UP", # pyupgrade
+  "D",  # pydocstyle
+  "S",  # flake8-bandit
+  "T20",# flake8-print
+  "PT", # flake8-pytest-style
+  "N", # pep8-naming
+  "ASYNC", # flake8-async
+  "Q", # flake8-quotes
+  "PTH", # flake8-pathlib
+]
+ignore = [
+  "E501", # line too long, handled by black
+  "B008", # do not perform function calls in argument defaults
+  "C901", # too complex
+]
+
+[tool.ruff.isort]
+section-order = ["future", "fastapi", "standard-library", "third-party",  "first-party", "local-folder"]
+
+[tool.ruff.isort.sections]
+fastapi = ["fastapi"]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+# [tool.ruff.per-file-ignores]
+# "__init__.py" = ["F401"]
