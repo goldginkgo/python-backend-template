@@ -1,10 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 
 from app.routers.api_router import api_router
 
-app = FastAPI(title="So Fast Project", version="0.1.0")
+app = FastAPI(title="Backend API", version="0.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -15,4 +14,3 @@ app.add_middleware(
 )
 
 app.include_router(api_router)
-app.mount("/static", StaticFiles(directory="static"), name="static")
