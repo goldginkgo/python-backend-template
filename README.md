@@ -9,8 +9,6 @@
 * docs
 * github ci
 * logging
-* commitizen
 * coverage
-* mypy
 * poetry-dynamic-versioning
 * makefile
