@@ -13,7 +13,7 @@ COPY ./pyproject.toml ./poetry.lock* /tmp/
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 
-# ================= PRODUCTION ==================
+# =================       PRODUCTION          ==================
 FROM python:3.11-slim-bookworm as production-stage
 
 # Install system dependencies

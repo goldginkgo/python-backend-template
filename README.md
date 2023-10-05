@@ -1,19 +1,11 @@
 # python-backend-template
 
 ## TODO
-* Dockerfile
-* semver
-* coverage
-* dependentbot/renovate
-* nox
+* semver/poetry-dynamic-versioning
+* pytest/coverage
 * docs
 * github workflow
 * logging
-* coverage
-* poetry-dynamic-versioning
-* makefile
-* mypy
-* pytest
 
 ## Pre-requisites
 
