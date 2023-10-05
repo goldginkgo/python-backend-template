@@ -5,6 +5,7 @@ license = "MIT"
 name = "python-backend-template"
 readme = "README.md"
 version = "0.0.0"
+packages = [{include = "app"}]
 
 [tool.poetry.dependencies]
 alembic = "^1.12.0"

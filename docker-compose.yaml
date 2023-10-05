@@ -20,7 +20,7 @@ services:
     image: postgres:16-bookworm
     restart: always
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - backend_postgres_data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
     environment:
@@ -49,8 +49,7 @@ services:
       - "backend-network"
 
 volumes:
-  postgres_data:
-
+  backend_postgres_data: {}
 
 networks:
   backend-network:

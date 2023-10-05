@@ -7,11 +7,13 @@
 * dependentbot/renovate
 * nox
 * docs
-* github ci
+* github workflow
 * logging
 * coverage
 * poetry-dynamic-versioning
 * makefile
+* mypy
+* pytest
 
 ## Pre-requisites
 

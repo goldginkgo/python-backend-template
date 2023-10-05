@@ -1,9 +1,10 @@
+# ================= Generate requirements.txt ==================
 FROM python:3.11-slim-bookworm as requirements-stage
 
 WORKDIR /tmp
 
 # Use the Tsinghua pypi mirror
-RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/ && pip install poetry
+RUN pip install poetry -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
 COPY ./pyproject.toml ./poetry.lock* /tmp/
 
@@ -11,13 +12,16 @@ COPY ./pyproject.toml ./poetry.lock* /tmp/
 # as it's the recommended approach thanks to which we do not have to install poetry in production-stage image
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
+
+# ================= PRODUCTION ==================
 FROM python:3.11-slim-bookworm as production-stage
 
 # Install system dependencies
 # Use Tsinghua mirror
 RUN sed -i -e 's/deb.debian.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list.d/debian.sources && \
   apt-get update && \
-  apt-get -y install libpq-dev gcc g++ curl procps net-tools tini
+  apt-get -y install --no-install-recommends libpq-dev gcc g++ curl procps net-tools tini && \
+  rm -rf /var/lib/apt/lists/*
 
 # Set up the Python environment
 ENV PYTHONFAULTHANDLER=1
@@ -28,10 +32,19 @@ WORKDIR /app
 
 # Install the project dependencies
 COPY --from=requirements-stage /tmp/requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
 # Copy the rest of the project files
-COPY . /app/
+COPY app/ app/
+COPY alembic/ alembic/
+COPY alembic.ini alembic.ini
 
 # Expose the application port
 EXPOSE 8000
+
+# Create a non-root user and switch to it, for security.
+RUN addgroup --system --gid 1001 "app"
+RUN adduser --system --uid 1001 "app"
+USER "app"
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

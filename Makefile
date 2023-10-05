@@ -11,6 +11,13 @@ help: ## Show this help (usage: make help)
 		} \
 	}' $(MAKEFILE_LIST)
 
+.PHONY: pre-commit
+pre-commit:	## Run pre-commit hooks
+	pre-commit
+
+.PHONY: test
+test:	## Run project tests
+	pytest
 
 .PHONY: build
 build:	## Build project with docker-compose
@@ -18,10 +25,16 @@ build:	## Build project with docker-compose
 
 .PHONY: up
 up:	## Run project with docker-compose
-	docker-compose up
+	docker-compose up --remove-orphans
+
+.PHONY: clean
+clean: ## Clean up project containers, networks and volumes with docker-compose
+	docker-compose down -v --remove-orphans | true
+	docker-compose rm -f | true
+	docker volume rm python-backend-template_backend_postgres_data | true
 
 .PHONY: down
-down: ## Stop project with docker-compose and remove containers and networks
+down: ## Stop project with docker-compose and remove containers and networks, but volume remains
 	docker-compose down --remove-orphans | true
 
 .PHONY: autogenerate
