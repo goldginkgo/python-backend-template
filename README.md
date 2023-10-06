@@ -4,7 +4,6 @@
 * semver/poetry-dynamic-versioning
 * pytest/coverage
 * docs
-* github workflow
 * logging
 * chart
 

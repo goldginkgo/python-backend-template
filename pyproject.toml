@@ -71,6 +71,7 @@ show_error_codes = true
 show_error_context = true
 # strict = true
 warn_unreachable = true
+mypy_path = ["app", "tests"]
 
 [tool.black]
 line-length = 120
@@ -113,4 +114,8 @@ fastapi = ["fastapi"]
 convention = "google"
 
 [tool.ruff.per-file-ignores]
-"__init__.py" = ["F401"]
+"tests/**/*.py" = [
+    "S101", # asserts allowed in tests
+    "ARG", # Unused function args -> fixtures nevertheless are functionally relevant
+    "FBT", # Don't care about booleans as positional arguments in tests, e.g. via @pytest.mark.parametrize()
+]
