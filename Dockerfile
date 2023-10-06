@@ -36,15 +36,18 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt -i https://pyp
 
 # Copy the rest of the project files
 COPY app/ app/
-COPY alembic/ alembic/
 COPY alembic.ini alembic.ini
+COPY alembic/versions alembic/versions
+COPY alembic/env.py alembic/env.py
+
+# Create a non-root user and switch to it, for security.
+RUN groupadd -g 10001 app && \
+  useradd -u 10001 -g app app \
+  && chown -R app:app /app
+
+USER app
 
 # Expose the application port
 EXPOSE 8000
-
-# Create a non-root user and switch to it, for security.
-RUN addgroup --system --gid 1001 "app"
-RUN adduser --system --uid 1001 "app"
-USER "app"
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

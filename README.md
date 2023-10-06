@@ -6,6 +6,7 @@
 * docs
 * github workflow
 * logging
+* chart
 
 ## Pre-requisites
 
