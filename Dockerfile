@@ -1,5 +1,5 @@
 # ================= Generate requirements.txt ==================
-FROM python:3.11-slim-bookworm as requirements-stage
+FROM python:3.12-slim-bookworm as requirements-stage
 
 WORKDIR /tmp
 
@@ -14,7 +14,7 @@ RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 
 # =================       PRODUCTION          ==================
-FROM python:3.11-slim-bookworm as production-stage
+FROM python:3.12-slim-bookworm as production-stage
 
 # Install system dependencies
 # Use Tsinghua mirror
