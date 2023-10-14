@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
     DATE_FORMAT: str
+    log_level: str = "INFO"
+    log_mode_json: bool = False
 
     class Config:
         env_file = ".env"

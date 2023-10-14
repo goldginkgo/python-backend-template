@@ -5,7 +5,6 @@ from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta
 
 from jose import JWTError, jwt
-from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.daos import user
@@ -15,6 +14,9 @@ from app.schemas.token import Token, TokenData
 from app.schemas.user import ChangePasswordIn, UserIn, UserOut
 from app.services.utils import UtilsService, oauth2_scheme
 from app.settings import settings
+from app.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class UserService:
@@ -58,7 +60,7 @@ class UserService:
             )
 
         access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-        access_token = UtilsService.create_access_token(data={"sub": _user.email}, expires_delta=access_token_expires)
+        access_token = UtilsService.create_access_token(data={"sub": _user.email}, expires_delta=access_token_expires)  # type: ignore
         token_data = {
             "access_token": access_token,
             "token_type": "Bearer",
