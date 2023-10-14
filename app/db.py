@@ -3,7 +3,7 @@ from collections.abc import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.settings import settings
+from app.utils.settings import settings
 
 postgres_url = settings.POSTGRES_URL.unicode_string()
 

@@ -13,8 +13,8 @@ from app.models.user import User as UserModel
 from app.schemas.token import Token, TokenData
 from app.schemas.user import ChangePasswordIn, UserIn, UserOut
 from app.services.utils import UtilsService, oauth2_scheme
-from app.settings import settings
 from app.utils.logger import get_logger
+from app.utils.settings import settings
 
 logger = get_logger(__name__)
 
