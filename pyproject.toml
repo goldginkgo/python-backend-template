@@ -16,7 +16,7 @@ loguru = "^0.7.0" # needed?
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}# needed?
 pydantic = "^2.4.2"
 pydantic-settings = "^2.0.3"
-python = "^3.11"
+python = "^3.12"
 python-dotenv = "^1.0.0"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}# needed?
 python-multipart = "^0.0.6" # needed?
@@ -37,6 +37,7 @@ pytest-asyncio = "^0.21.1"
 pytest-bdd = "^6.1.1"
 pytest-cov = "^4.1.0"
 pytest-mock = "^3.11.1"
+rich = "^13.6.0"
 ruff = "^0.0.292"
 
 [build-system]
