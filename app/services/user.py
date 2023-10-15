@@ -7,8 +7,8 @@ from datetime import timedelta
 from jose import JWTError, jwt
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.db import get_session
 from app.daos import user
-from app.db import get_session
 from app.models.user import User as UserModel
 from app.schemas.token import Token, TokenData
 from app.schemas.user import ChangePasswordIn, UserIn, UserOut

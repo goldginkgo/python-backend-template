@@ -1,12 +1,20 @@
 import logging
 
 import structlog
+from asgi_correlation_id import correlation_id
 from structlog.contextvars import (
     bind_contextvars,
     bound_contextvars,
     unbind_contextvars,
 )
-from structlog.types import Processor
+from structlog.types import EventDict, Processor
+
+
+def add_correlation(logger: logging.Logger, method_name: str, event_dict: EventDict) -> EventDict:
+    """Add request id to log message."""
+    if request_id := correlation_id.get():
+        event_dict["request_id"] = request_id
+    return event_dict
 
 
 def configure_sqlalchemy_logging():
@@ -34,6 +42,7 @@ def setup_logging(level: int | str, as_json: bool = False) -> None:
         return
 
     shared_processors: list[Processor] = [
+        add_correlation,
         structlog.contextvars.merge_contextvars,
         structlog.stdlib.add_logger_name,
         structlog.stdlib.add_log_level,

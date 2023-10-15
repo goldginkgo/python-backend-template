@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db import get_session
+from app.core.db import get_session
 from app.schemas.token import Token
 from app.schemas.user import ChangePasswordIn, UserIn, UserOut
 from app.services.user import UserService
