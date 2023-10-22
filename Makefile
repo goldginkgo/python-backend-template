@@ -21,33 +21,33 @@ test:	## Run project tests
 
 .PHONY: build
 build:	## Build project with docker-compose
-	docker-compose up --build
+	docker compose up --build
 
 .PHONY: up
 up:	## Run project with docker-compose
-	docker-compose up --remove-orphans
+	docker compose up --remove-orphans
 
 .PHONY: clean
 clean: ## Clean up project containers, networks and volumes with docker-compose
-	docker-compose down -v --remove-orphans | true
-	docker-compose rm -f | true
+	docker compose down -v --remove-orphans | true
+	docker compose rm -f | true
 	docker volume rm python-backend-template_backend_postgres_data | true
 
 .PHONY: down
 down: ## Stop project with docker-compose and remove containers and networks, but volume remains
-	docker-compose down --remove-orphans | true
+	docker compose down --remove-orphans | true
 
 .PHONY: autogenerate
 autogenerate:  ## Generate migration file (usage: make autogenerate msg="migration message")
-	docker-compose up -d | true
-	docker-compose exec app alembic revision --autogenerate -m "$(msg)"
+	docker compose up -d | true
+	docker compose exec app alembic revision --autogenerate -m "$(msg)"
 
 .PHONY: downgrade
 downgrade:  ## Downgrade by 1 revision
-	docker-compose up -d | true
-	docker-compose exec app alembic downgrade -1
+	docker compose up -d | true
+	docker compose exec app alembic downgrade -1
 
 .PHONY: downgrade_to
 downgrade_to:  ## Downgrade to the specific revision (usage: make downgrade_to revision="revision")
-	docker-compose up -d | true
-	docker-compose exec app alembic downgrade "$(revision)"
+	docker compose up -d | true
+	docker compose exec app alembic downgrade "$(revision)"
