@@ -3,8 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from asgi_correlation_id import CorrelationIdMiddleware
 
+from app.api.routers import api_router
 from app.core.middlewares import request_time_middleware
-from app.routers.api_router import api_router
 from app.utils.logger import setup_logging
 from app.utils.settings import settings
 
