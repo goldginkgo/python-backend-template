@@ -36,6 +36,7 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt -i https://pyp
 
 # Copy the rest of the project files
 COPY app/ app/
+COPY static/ static/
 COPY alembic.ini alembic.ini
 COPY alembic/versions alembic/versions
 COPY alembic/env.py alembic/env.py
