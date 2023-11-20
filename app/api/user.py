@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends
 
 from app.models.user import User
 from app.schemas.user import UserCreate, UserRead, UserUpdate
-from app.services.user import auth_backend, current_active_user, fastapi_users
+from app.services.user import auth_backend, current_active_user, fastapi_users, github_client
+from app.utils.settings import settings
 
 router = APIRouter()
 
@@ -31,6 +32,24 @@ router.include_router(
     fastapi_users.get_users_router(UserRead, UserUpdate),
     prefix="/users",
     tags=["users"],
+)
+
+router.include_router(
+    fastapi_users.get_oauth_router(
+        github_client,
+        auth_backend,
+        settings.SECRET_KEY,
+        associate_by_email=True,
+        is_verified_by_default=True,
+    ),
+    prefix="/auth/oauth2",
+    tags=["auth"],
+)
+
+router.include_router(
+    fastapi_users.get_oauth_associate_router(github_client, UserRead, settings.SECRET_KEY),
+    prefix="/auth/associate/oauth2",
+    tags=["auth"],
 )
 
 

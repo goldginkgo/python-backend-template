@@ -10,6 +10,7 @@ from fastapi_users.authentication import (
 )
 from fastapi_users.authentication.strategy.db import AccessTokenDatabase, DatabaseStrategy
 from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
+from httpx_oauth.clients.github import GitHubOAuth2
 
 from app.models.user import AccessToken, User, get_access_token_db, get_user_db
 from app.schemas.user import UserCreate
@@ -65,6 +66,10 @@ auth_backend = AuthenticationBackend(
 fastapi_users = FastAPIUsers[User, uuid.UUID](get_user_manager, [auth_backend])
 
 current_active_user = fastapi_users.current_user(active=True)
+
+github_client = GitHubOAuth2(
+    settings.GITHUB_CLIENT_ID.get_secret_value(), settings.GITHUB_CLIENT_SECRET.get_secret_value()
+)
 
 
 # from fastapi import Depends, HTTPException, status
