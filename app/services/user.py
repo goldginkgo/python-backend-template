@@ -10,6 +10,7 @@ from fastapi_users.authentication import (
 )
 from fastapi_users.authentication.strategy.db import AccessTokenDatabase, DatabaseStrategy
 from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
+from httpx_oauth.oauth2 import OAuth2
 
 from app.models.user import AccessToken, User, get_access_token_db, get_user_db
 from app.schemas.user import UserCreate
@@ -66,6 +67,21 @@ fastapi_users = FastAPIUsers[User, uuid.UUID](get_user_manager, [auth_backend])
 
 current_active_user = fastapi_users.current_user(active=True)
 
+
+# google_oauth_client = GoogleOAuth2("CLIENT_ID", "CLIENT_SECRET")
+client_id = "franktest"
+client_secret = "xxxx"  # noqa
+authorize_endpint = "xx"
+access_token_endpoint = "xx"  # noqa
+
+oauth2_client = OAuth2(
+    client_id,
+    client_secret,
+    authorize_endpint,
+    access_token_endpoint,
+    # refresh_token_endpoint="REFRESH_TOKEN_ENDPOINT",
+    # revoke_token_endpoint="REVOKE_TOKEN_ENDPOINT",
+)
 
 # from fastapi import Depends, HTTPException, status
 # from fastapi.responses import JSONResponse
