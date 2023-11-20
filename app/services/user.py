@@ -1,17 +1,18 @@
 from fastapi import Depends, Request
 
 import uuid
-from typing import Optional
+from typing import Optional, Union
 
-from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin
+from fastapi_users import BaseUserManager, FastAPIUsers, InvalidPasswordException, UUIDIDMixin
 from fastapi_users.authentication import (
     AuthenticationBackend,
     BearerTransport,
-    JWTStrategy,
 )
+from fastapi_users.authentication.strategy.db import AccessTokenDatabase, DatabaseStrategy
 from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
 
-from app.models.user import User, get_user_db
+from app.models.user import AccessToken, User, get_access_token_db, get_user_db
+from app.schemas.user import UserCreate
 from app.utils.logger import get_logger
 from app.utils.settings import settings
 
@@ -21,6 +22,16 @@ logger = get_logger(__name__)
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_password_token_secret = settings.SECRET_KEY
     verification_token_secret = settings.SECRET_KEY
+
+    async def validate_password(
+        self,
+        password: str,
+        user: Union[UserCreate, User],
+    ) -> None:
+        if len(password) < 8:
+            raise InvalidPasswordException(reason="Password should be at least 8 characters")
+        if user.email in password:
+            raise InvalidPasswordException(reason="Password should not contain e-mail")
 
     async def on_after_register(self, user: User, request: Optional[Request] = None):
         logger.info(f"User {user.id} has registered.")
@@ -39,14 +50,16 @@ async def get_user_manager(user_db: SQLAlchemyUserDatabase = Depends(get_user_db
 bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")
 
 
-def get_jwt_strategy() -> JWTStrategy:
-    return JWTStrategy(secret=settings.SECRET_KEY, lifetime_seconds=3600)
+def get_database_strategy(
+    access_token_db: AccessTokenDatabase[AccessToken] = Depends(get_access_token_db),
+) -> DatabaseStrategy:
+    return DatabaseStrategy(access_token_db, lifetime_seconds=3600)
 
 
 auth_backend = AuthenticationBackend(
     name="jwt",
     transport=bearer_transport,
-    get_strategy=get_jwt_strategy,
+    get_strategy=get_database_strategy,
 )
 
 fastapi_users = FastAPIUsers[User, uuid.UUID](get_user_manager, [auth_backend])

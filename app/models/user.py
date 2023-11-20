@@ -3,6 +3,10 @@ from fastapi import Depends
 from datetime import datetime
 
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
+from fastapi_users_db_sqlalchemy.access_token import (
+    SQLAlchemyAccessTokenDatabase,
+    SQLAlchemyBaseAccessTokenTableUUID,
+)
 from sqlalchemy import DateTime, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Mapped, mapped_column
@@ -11,13 +15,21 @@ from app.core.database import get_session
 from app.models.base import Base
 
 
-class User(Base, SQLAlchemyBaseUserTableUUID):
+class User(SQLAlchemyBaseUserTableUUID, Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=func.now(), onupdate=func.now())
 
 
+class AccessToken(SQLAlchemyBaseAccessTokenTableUUID, Base):
+    pass
+
+
 async def get_user_db(session: AsyncSession = Depends(get_session)):
     yield SQLAlchemyUserDatabase(session, User)
+
+
+async def get_access_token_db(session: AsyncSession = Depends(get_session)):
+    yield SQLAlchemyAccessTokenDatabase(session, AccessToken)
 
 
 # from sqlalchemy import DateTime, String, func
