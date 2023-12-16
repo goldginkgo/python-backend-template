@@ -1589,8 +1589,8 @@ recommended = ["mkdocs-minify-plugin (>=0.7,<1.0)", "mkdocs-redirects (>=1.2,<2.
 
 [package.source]
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
-reference = "aliyun"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+reference = "tsinghua"
 
 [[package]]
 name = "mkdocs-material-extensions"
