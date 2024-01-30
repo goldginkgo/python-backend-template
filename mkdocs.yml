@@ -1,7 +1,7 @@
 site_name: python-backend-template
 repo_name: python-backend-template
 repo_url: https://github.com/goldginkgo/python-backend-template
-copyright: Copyright &copy; 2023 Frank Dai
+copyright: Copyright &copy; 2023-2024 Frank Dai
 theme:
   name: material
   icon:
