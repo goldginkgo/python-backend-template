@@ -8,44 +8,43 @@ readme = "README.md"
 version = "0.0.0"
 
 [tool.poetry.dependencies]
-alembic = "^1.12.0"
-asgi-correlation-id = "^4.2.0"
-asyncpg = "^0.28.0"
-email-validator = "^2.0.0-post.0"
-fastapi = "^0.104.0"
-fastapi-pagination = "^0.12.11" # TODO add support for pagination
+alembic = "^1.13.1"
+asgi-correlation-id = "^4.3.0"
+asyncpg = "^0.29.0"
+fastapi = "^0.109.0"
+fastapi-pagination = "^0.12.14" # TODO add support for pagination
 fastapi-users = {extras = ["oauth", "sqlalchemy"], version = "^12.1.2"}
-opentelemetry-api = "^1.20.0"
-opentelemetry-exporter-otlp-proto-grpc = "^1.20.0"
-opentelemetry-instrumentation-aiohttp-client = "^0.41b0"
-opentelemetry-instrumentation-fastapi = "^0.41b0"
-opentelemetry-sdk = "^1.20.0"
+opentelemetry-api = "^1.22.0"
+opentelemetry-exporter-otlp-proto-grpc = "^1.22.0"
+opentelemetry-instrumentation-aiohttp-client = "^0.43b0"
+opentelemetry-instrumentation-fastapi = "^0.43b0"
+opentelemetry-sdk = "^1.22.0"
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}# needed?
-pydantic = "^2.4.2"
-pydantic-settings = "^2.0.3"
+pydantic = "^2.6.0"
+pydantic-settings = "^2.1.0"
 python = "^3.12"
-python-dotenv = "^1.0.0"
+python-dotenv = "^1.0.1"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}# needed?
 python-multipart = "^0.0.6" # needed?
-sqlalchemy = {extras = ["asyncio"], version = "^2.0.21"}
-structlog = "^23.1.0"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.25"}
+structlog = "^24.1.0"
 tenacity = "^8.2.3"
-uvicorn = "^0.23.2"
+uvicorn = "^0.27.0.post1"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.9.1"
-commitizen = "^3.10.0"
-coverage = "^7.3.2"
-mkdocs-material = "^9.4.4"
-mypy = "^1.5.1"
-pre-commit = "^3.4.0"
-pytest = "^7.4.2"
+black = "^24.1.1"
+commitizen = "^3.13.0"
+coverage = "^7.4.1"
+mkdocs-material = "^9.5.6"
+mypy = "^1.8.0"
+pre-commit = "^3.6.0"
+pytest = "^8.0.0"
 pytest-asyncio = "^0.21.1"
-pytest-bdd = "^7.0.0"
+pytest-bdd = "^7.0.1"
 pytest-cov = "^4.1.0"
-pytest-mock = "^3.11.1"
-rich = "^13.6.0"
-ruff = "^0.1.0"
+pytest-mock = "^3.12.0"
+rich = "^13.7.0"
+ruff = "^0.1.15"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
