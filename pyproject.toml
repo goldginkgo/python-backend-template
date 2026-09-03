@@ -10,7 +10,7 @@ version = "0.0.0"
 [tool.poetry.dependencies]
 alembic = "^1.13.1"
 asgi-correlation-id = "^4.3.1"
-asyncpg = "^0.29.0"
+asyncpg = "^0.31.0"
 fastapi = "^0.111.0"
 fastapi-pagination = "^0.12.14" # TODO add support for pagination
 fastapi-users = {extras = ["oauth", "sqlalchemy"], version = "^13.0.0"}
